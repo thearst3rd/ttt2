@@ -10,6 +10,14 @@
 /* ----- VARIABLE DECLARATIONS ----- */
 
 char *board[9];
+/*
+ * Valid board states:
+ * 0 : No player, not selected
+ * 1 : Player 1 owned
+ * 2 : Player 2 owned
+ * 3 : Tied board (both players owned)
+ * 4 : Selected
+ */
 char boardState[9];
 
 

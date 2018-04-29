@@ -33,9 +33,9 @@ int main(int argc, char *argv[])
 	initBoard();
 	
 	bool running = true;
-	while (running)
+	//while (running)
 	{
-		
+		printBoard();
 	}
 
 	return 0;
