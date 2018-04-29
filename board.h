@@ -9,15 +9,14 @@
 
 /* ----- VARIABLE DECLARATIONS ----- */
 
+// These are all possible boardState values
+#define STATE_REGULAR 0
+#define STATE_1 1
+#define STATE_2 2
+#define STATE_TIED 3
+#define STATE_SELECTED 4
+
 char *board[9];
-/*
- * Valid board states:
- * 0 : No player, not selected
- * 1 : Player 1 owned
- * 2 : Player 2 owned
- * 3 : Tied board (both players owned)
- * 4 : Selected
- */
 char boardState[9];
 
 
@@ -26,6 +25,7 @@ char boardState[9];
 void initBoard();
 void doTurn();
 void printBoard();
+int checkWins(int);
 
 
 #endif // _BOARD_H_

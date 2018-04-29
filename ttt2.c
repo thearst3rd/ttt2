@@ -33,10 +33,25 @@ int main(int argc, char *argv[])
 	initBoard();
 	
 	bool running = true;
-	//while (running)
+	while (running)
 	{
 		printBoard();
+		doTurn();
+		
+		int wins1 = checkWins(1);
+		int wins2 = checkWins(2);
+		
+		if ((wins1 > 0) || (wins2 > 0))
+		{
+			running = false;
+			if (wins1 > wins2)
+				printf("Player 1 is the winner!");
+			else if (wins2 > wins1)
+				printf("Player 2 is the winner!");
+			else
+				printf("The game ended in a draw!");
+		}
 	}
-
+	
 	return 0;
 }

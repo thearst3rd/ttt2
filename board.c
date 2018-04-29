@@ -25,15 +25,9 @@ void initBoard()
 		boardState[i] = 4; 	// Board selected, piece can be placed on it
 		for (int j = 0; j < 9; j++)
 		{
-			board[i][j] = '1' + j;//'.';
+			board[i][j] = '.';
 		}
 	}
-
-	boardState[0] = 1;
-	boardState[5] = 2;
-	boardState[3] = 3;
-	boardState[1] = 0;
-	boardState[2] = 0;
 }
 
 // Helper function, gets a player's input
@@ -51,8 +45,59 @@ int getInput()
 // Performs a complete turn
 void doTurn()
 {
-	int input = getInput();
-	printf("%d\n", input);
+	// Get the number of selected boards
+	int selectedCount = 0;
+	for (int i = 0; i < 9; i++)
+	{
+		if (boardState[i] == 4)
+			i++;
+	}
+	
+	int selectedBoard = -1;
+	
+	if (selectedCount > 1)
+	{
+		// Ask player to select a single large board
+		printf("Please select a large board: ");
+		int input = getInput();
+		while ((input <= 0) || (input > 9) || (boardState[input-1] != 4))
+		{
+			printf("That is invalid, try again: ");
+			input = getInput();
+		}
+		
+		// Reduce boards to only a single selected board
+		selectedBoard = input - 1;
+		for (int i = 0; i < 9; i++)
+		{
+			if (i == selectedBoard)
+				continue;
+			
+			if (boardState[i] == 4)
+				boardState[i] = 0;
+		}
+		
+		printBoard();
+	}
+	else
+	{
+		for (int i = 0; i < 9; i++)
+		{
+			if (boardState[i] == 4)
+			{
+				selectedBoard = i;
+				break;
+			}
+		}
+	}
+	
+	if (selectedBoard == -1)
+	{
+		printf("ERROR, no board seleceted");
+		exit(1);
+	}
+	
+	// TODO: Ask for piece location, verify, change current player
 }
 
 // Writes the contents of a small boards visuals to the given buffer
@@ -162,4 +207,40 @@ void printBoard()
 		free(bufs[i]);
 	}
 	free(bufs);
+}
+
+// Helper function that checks the given three big board pieces for a win
+int checkTriple(int player, int i, int j, int k)
+{
+	return (boardState[i] == player || boardState[i] == 3)
+	       && (boardState[j] == player || boardState[j] == 3)
+	       && (boardState[k] == player || boardState[k] == 3);
+}
+
+// Returns the number of three in a rows by the given player
+int checkWins(int player)
+{
+	int count = 0;
+	
+	// Check verticals
+	for (int i = 0; i < 3; i++)
+	{
+		if (checkTriple(player, i, i + 3, i + 6))
+			count++;
+	}
+
+	// Check horizontals
+	for (int i = 0; i < 9; i += 3)
+	{
+		if (checkTriple(player, i, i + 1, i + 2))
+			count++;
+	}
+	
+	// Check diagonals
+	if (checkTriple(player, 0, 4, 8))
+		count++;
+	if (checkTriple(player, 2, 4, 6))
+		count++;
+	
+	return count;
 }
