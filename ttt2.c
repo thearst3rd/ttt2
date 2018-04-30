@@ -43,13 +43,14 @@ int main(int argc, char *argv[])
 		
 		if ((wins1 > 0) || (wins2 > 0))
 		{
+			printBoard();
 			running = false;
 			if (wins1 > wins2)
-				printf("Player 1 is the winner!");
+				printf("Player 1 is the winner!\n");
 			else if (wins2 > wins1)
-				printf("Player 2 is the winner!");
+				printf("Player 2 is the winner!\n");
 			else
-				printf("The game ended in a draw!");
+				printf("The game ended in a draw!\n");
 		}
 	}
 	

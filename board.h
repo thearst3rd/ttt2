@@ -18,6 +18,7 @@
 
 char *board[9];
 char boardState[9];
+int currPlayer;
 
 
 /* ----- FUNCTION DECLARATIONS ----- */
